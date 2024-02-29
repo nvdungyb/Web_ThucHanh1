@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thi Trắc Nghiệm</title>
+    <link rel="stylesheet" href="style/index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Bài Thi Trắc Nghiệm</h1>
+      </div>
+      <form id="userInfoForm" class="info">
+        <table>
+          <tr>
+            <td>
+              <label for="fullName">Họ và Tên:</label>
+            </td>
+            <td><input type="text" id="fullName" required /><br /></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="dob">Ngày tháng năm sinh:</label>
+            </td>
+            <td><input type="date" id="dob" required /><br /></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="studentID">Mã sinh viên:</label>
+            </td>
+            <td><input type="text" id="studentID" required /><br /></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="class">Lớp:</label>
+            </td>
+            <td><input type="text" id="class" required /><br /></td>
+          </tr>
+        </table>
+        <div class="start-button">
+          <button type="submit">Bắt đầu</button>
+        </div>
+      </form>
+
+      <!-- Question form -->
+      <form id="quizForm" class="hidden"></form>
+      <button type="submit" id="hoanThanhBtn" class="hidden">Hoàn thành</button>
+    </div>
+
+    <script>
+      document
+        .getElementById("userInfoForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          document.getElementById("userInfoForm").classList.add("hidden");
+          document.getElementById("quizForm").classList.remove("hidden");
+          document.getElementById("hoanThanhBtn").classList.remove("hidden");
+
+          generateQuestions();
+        });
+
+      function generateQuestions() {
+        const quizForm = document.getElementById("quizForm");
+
+        // Tạo 10 câu hỏi đúng/sai
+        generateGroup1(quizForm);
+
+        // Tạo 10 câu hỏi lựa chọn 1 trong 4 đáp án.
+        generateGroup2(quizForm);
+
+        // Tạo 10 câu hỏi lựa chọn nhiều đáp án.
+        generateGroup3(quizForm);
+
+        // Tạo 10 câu hỏi điền đáp án.
+        generateGroup4(quizForm);
+      }
+
+      function generateGroup1(form) {
+        for (let i = 1; i <= 10; i++) {
+          const questionDiv = document.createElement("div");
+          questionDiv.classList.add("question");
+
+          const questionNumber = document.createElement("p");
+          questionNumber.textContent = "Câu hỏi " + i;
+          questionDiv.appendChild(questionNumber);
+
+          const questionText = document.createElement("p");
+          questionText.textContent = "Câu hỏi ..., lựa chọn đúng/sai.";
+          questionDiv.appendChild(questionText);
+
+          const trueFalseLabel = document.createElement("label");
+          trueFalseLabel.innerHTML =
+            '<input type="radio" name="group1-q' + i + '" value="true"> Đúng';
+          questionDiv.appendChild(trueFalseLabel);
+
+          const falseFalseLabel = document.createElement("label");
+          falseFalseLabel.innerHTML =
+            '<input type="radio" name="group1-q' + i + '" value="false"> Sai';
+          questionDiv.appendChild(falseFalseLabel);
+
+          form.appendChild(questionDiv);
+        }
+      }
+
+      function generateGroup2(form) {
+        for (let i = 1; i <= 10; i++) {
+          const questionDiv = document.createElement("div");
+          questionDiv.classList.add("question");
+
+          const questionNumber = document.createElement("p");
+          questionNumber.textContent = "Câu hỏi " + (i + 10);
+          questionDiv.appendChild(questionNumber);
+
+          const questionText = document.createElement("p");
+          questionText.textContent = "Câu hỏi ..., chọn 1 trong 4 đáp án.";
+          questionDiv.appendChild(questionText);
+
+          const options = ["a", "b", "c", "d"];
+          options.forEach((option) => {
+            const label = document.createElement("label");
+            label.innerHTML = `<input type="radio" name="group2-q${i}" value="${option}"> ${option.toUpperCase()}) Đáp án ${option.toUpperCase()}`;
+            questionDiv.appendChild(label);
+          });
+
+          form.appendChild(questionDiv);
+        }
+      }
+
+      function generateGroup3(form) {
+        for (let i = 1; i <= 10; i++) {
+          const questionDiv = document.createElement("div");
+          questionDiv.classList.add("question");
+
+          const questionNumber = document.createElement("p");
+          questionNumber.textContent = "Câu hỏi " + (i + 20);
+          questionDiv.appendChild(questionNumber);
+
+          const questionText = document.createElement("p");
+          questionText.textContent = "Câu hỏi ..., chọn nhiều đáp án.";
+          questionDiv.appendChild(questionText);
+
+          const options = ["a", "b", "c", "d"];
+          options.forEach((option) => {
+            const label = document.createElement("label");
+            label.innerHTML = `<input type="checkbox" name="group3-q${i}" value="${option}"> ${option.toUpperCase()}) Đáp án ${option.toUpperCase()}`;
+            questionDiv.appendChild(label);
+          });
+
+          form.appendChild(questionDiv);
+        }
+      }
+
+      function generateGroup4(form) {
+        for (let i = 1; i <= 10; i++) {
+          const questionDiv = document.createElement("div");
+          questionDiv.classList.add("question");
+
+          const questionNumber = document.createElement("p");
+          questionNumber.textContent = "Câu hỏi " + (i + 30);
+          questionDiv.appendChild(questionNumber);
+
+          const questionText = document.createElement("p");
+          questionText.textContent = "Câu hỏi ..., trả lời tự luận.";
+          questionDiv.appendChild(questionText);
+
+          const answerInput = document.createElement("textarea");
+          answerInput.setAttribute("name", "group4-q" + i);
+          answerInput.setAttribute("rows", "4");
+          answerInput.setAttribute("cols", "50");
+          questionDiv.appendChild(answerInput);
+
+          form.appendChild(questionDiv);
+        }
+
+        const dapAnDung = [
+          // Nhóm 1: Lựa chọn đúng/sai
+          [
+            "true",
+            "false",
+            "true",
+            "true",
+            "false",
+            "false",
+            "true",
+            "false",
+            "true",
+            "true",
+          ],
+
+          // Nhóm 2: Chọn 1 trong 4 đáp án
+          ["a", "c", "b", "d", "a", "c", "d", "b", "a", "d"],
+
+          // Nhóm 3: Chọn nhiều đáp án
+          [
+            ["a", "b"],
+            ["b", "c"],
+            ["a", "c", "d"],
+            ["b", "c"],
+            ["a", "b"],
+            ["c", "d"],
+            ["a", "d"],
+            ["b", "c"],
+            ["a", "b", "d"],
+            ["a", "c"],
+          ],
+
+          // Nhóm 4: Trả lời tự luận
+          [
+            "Câu trả lời mẫu 1",
+            "Câu trả lời mẫu 2",
+            "Câu trả lời mẫu 3",
+            "Câu trả lời mẫu 4",
+            "Câu trả lời mẫu 5",
+            "Câu trả lời mẫu 6",
+            "Câu trả lời mẫu 7",
+            "Câu trả lời mẫu 8",
+            "Câu trả lời mẫu 9",
+            "Câu trả lời mẫu 10",
+          ],
+        ];
+
+        function kiemTraVaChamDiem() {
+          let diem = 0;
+
+          // Kiểm tra và chấm điểm nhóm 1
+          for (let i = 0; i < 10; i++) {
+            const dapAn = dapAnDung[0][i];
+            const cauTraLoi = document.querySelector(
+              'input[name="group1-q' + (i + 1) + '"]:checked'
+            );
+            if (cauTraLoi && cauTraLoi.value === dapAn) {
+              diem++;
+            }
+          }
+
+          // Kiểm tra và chấm điểm nhóm 2
+          for (let i = 0; i < 10; i++) {
+            const dapAn = dapAnDung[1][i];
+            const cauTraLoi = document.querySelector(
+              'input[name="group2-q' + (i + 1) + '"]:checked'
+            );
+            if (cauTraLoi && cauTraLoi.value === dapAn) {
+              diem++;
+            }
+          }
+
+          // Kiểm tra và chấm điểm nhóm 3
+          for (let i = 0; i < 10; i++) {
+            const dapAn = dapAnDung[2][i];
+            const cauTraLoi = document.querySelectorAll(
+              'input[name="group3-q' + (i + 1) + '"]:checked'
+            );
+            const cauTraLoiValues = Array.from(cauTraLoi).map(
+              (input) => input.value
+            );
+            if (compareArrays(cauTraLoiValues, dapAn)) {
+              diem++;
+            }
+          }
+
+          // Kiểm tra và chấm điểm nhóm 4
+          for (let i = 0; i < 10; i++) {
+            const dapAn = dapAnDung[3][i];
+            const cauTraLoi = document.querySelector(
+              'textarea[name="group4-q' + (i + 1) + '"]'
+            ).value;
+            if (cauTraLoi.trim() === dapAn) {
+              diem++;
+            }
+          }
+
+          // Hiển thị điểm số
+          alert("Điểm của bạn: " + diem + "/40");
+        }
+        document
+          .getElementById("hoanThanhBtn")
+          .addEventListener("click", function (event) {
+            event.preventDefault();
+            kiemTraVaChamDiem();
+          });
+      }
+
+      function compareArrays(arr1, arr2) {
+        if (arr1.length !== arr2.length) {
+          return false;
+        }
+        for (let i = 0; i < arr1.length; i++) {
+          if (arr1[i] !== arr2[i]) {
+            return false;
+          }
+        }
+        return true;
+      }
+    </script>
+  </body>
+</html>
