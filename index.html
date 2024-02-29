@@ -272,7 +272,13 @@
           }
 
           // Hiển thị điểm số
-          alert("Điểm của bạn: " + diem + "/40");
+          alert(
+            "Số câu trả lời đúng của : " +
+              document.getElementById("fullName").value +
+              " là: " +
+              diem +
+              "/40"
+          );
         }
         document
           .getElementById("hoanThanhBtn")

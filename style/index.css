@@ -102,3 +102,11 @@ button {
   background-color: #eee9e9;
   transition: background-color 0.3s ease;
 }
+
+.correct-answer {
+  background-color: rgb(116, 172, 208);
+}
+
+.wrong-answer {
+  background-color: rgb(255, 0, 0);
+}
